@@ -91,13 +91,38 @@ def rag_chat(query):
     answer = generate_local_answer(prompt)
     return answer
 
-iface = gr.Interface(
-    fn=rag_chat,
-    inputs=gr.Textbox(lines=3, placeholder="Enter a clinical query..."),
-    outputs="text",
-    title="🩺 Clinical Reasoning RAG Assistant",
-    description="Ask a medical question based on MIMIC-IV-Ext-DiReCT's diagnostic knowledge.",
-    allow_flagging="never"
-)
+# Optional: basic CSS to enhance layout
+custom_css = """
+textarea, .input_textbox {
+    font-size: 1.05rem !important;
+}
+.output-markdown {
+    font-size: 1.08rem !important;
+}
+"""
 
-iface.launch()
+with gr.Blocks(css=custom_css, theme=gr.themes.Default(primary_hue="blue")) as demo:
+    gr.Markdown("""
+# 🩺 RAGnosis — Clinical Reasoning Assistant
+
+Enter a natural-language query describing your patient's condition to receive an AI-generated diagnostic reasoning response.
+
+**Example:**  
+*Patient has shortness of breath, fatigue, and leg swelling.*
+""")
+
+    with gr.Row():
+        with gr.Column():
+            query_input = gr.Textbox(
+                lines=4,
+                label="📝 Patient Query",
+                placeholder="Enter patient symptoms or findings..."
+            )
+            submit_btn = gr.Button("🔍 Generate Diagnosis")
+
+        with gr.Column():
+            output = gr.Markdown(label="🧠 Diagnostic Reasoning")
+
+    submit_btn.click(fn=rag_chat, inputs=query_input, outputs=output)
+
+demo.launch(share=True)
