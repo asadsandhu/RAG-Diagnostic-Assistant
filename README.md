@@ -1,109 +1,95 @@
-```markdown
-<h1 align="center">🩺 RAGnosis</h1>
-<h3 align="center">Clinical Reasoning Assistant using MIMIC-IV-Ext-DiReCT & RAG</h3>
+# 🩺 RAGnosis – Clinical Reasoning via Retrieval-Augmented Generation
 
-<p align="center">
-  <img src="assets/demo.png" alt="RAGnosis Demo" width="750"/>
-</p>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Hugging Face](https://img.shields.io/badge/HuggingFace-RAGnosis-blue?logo=huggingface)](https://huggingface.co/spaces/asadsandhu/RAGnosis)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-asadsandhu/RAG--Diagnostic--Assistant-black?logo=github)](https://github.com/asadsandhu/RAG-Diagnostic-Assistant)
 
-<p align="center">
-  <a href="https://huggingface.co/spaces/asadsandhu/RAGnosis"><img alt="HF Space" src="https://img.shields.io/badge/Try%20Live%20App-%F0%9F%94%8D%20RAGnosis-blue?style=for-the-badge&logo=gradio"></a>
-  <a href="https://github.com/asadsandhu/RAG-Diagnostic-Assistant"><img alt="GitHub Repo" src="https://img.shields.io/badge/View%20Code-%F0%9F%92%BB%20GitHub-black?style=for-the-badge&logo=github"></a>
-</p>
+> ⚕️ A fully offline-capable, Gradio-powered RAG assistant trained on **annotated clinical notes** from the [MIMIC-IV-Ext-DiReCT](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/mimic-iv-ext-direct-1.0.0.zip) dataset to perform explainable diagnostic reasoning.
 
 ---
 
-## 🧠 What is RAGnosis?
+## 🖼️ Demo
 
-**RAGnosis** is an LLM-powered **diagnostic reasoning assistant** that uses [MIMIC-IV-Ext-DiReCT](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/mimic-iv-ext-direct-1.0.0.zip) — a dataset of real-world ICU clinical notes and annotated diagnostic trees — to generate accurate and explainable answers for clinicians and researchers.
+Try it live on **Hugging Face Spaces** 👉  
+🔗 https://huggingface.co/spaces/asadsandhu/RAGnosis
 
-It combines **FAISS retrieval**, **clinical knowledge graphs**, and **Generative LLMs (Mistral 7B)** in a Retrieval-Augmented Generation (RAG) pipeline.
-
----
-
-## 🔥 Try it Live
-
-🚀 **Launch the app here**:  
-🔗 [https://huggingface.co/spaces/asadsandhu/RAGnosis](https://huggingface.co/spaces/asadsandhu/RAGnosis)
+<p align="center">
+  <img src="assets/demo.png" alt="Demo" width="750">
+</p>
 
 ---
 
 ## ⚙️ Tech Stack
 
-| Layer | Component |
-|-------|-----------|
-| 🧠 LLM | [`Nous-Hermes-2-Mistral-7B-DPO`](https://huggingface.co/NousResearch/Nous-Hermes-2-Mistral-7B-DPO) |
-| 📖 Dataset | [MIMIC-IV-Ext-DiReCT](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/mimic-iv-ext-direct-1.0.0.zip) |
-| 🔍 Retriever | FAISS + `all-MiniLM-L6-v2` (Sentence Transformers) |
-| 🧾 Backend | Python + Transformers + BitsAndBytes |
-| 💻 Interface | [Gradio](https://gradio.app/) (on Hugging Face Spaces) |
+| Layer        | Details                                                                 |
+|--------------|-------------------------------------------------------------------------|
+| 🧠 Model      | [`Nous-Hermes-2-Mistral-7B-DPO`](https://huggingface.co/NousResearch/Nous-Hermes-2-Mistral-7B-DPO) |
+| 🏥 Dataset    | [`MIMIC-IV-Ext-DiReCT`](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/mimic-iv-ext-direct-1.0.0.zip) |
+| 🔍 Retriever  | FAISS + SentenceTransformers (`all-MiniLM-L6-v2`)                      |
+| 💻 Frontend   | Gradio (Hugging Face Spaces)                                            |
+| 🧠 Backend    | PyTorch + Transformers + BitsAndBytes                                   |
 
 ---
 
-## 🩺 Features
+## 🚀 Features
 
-- 🔎 Top-k retrieval from annotated notes + clinical KG
-- 💡 Reasoning powered by local Mistral 7B model (offline-capable)
-- 📄 Diagnoses explained step-by-step in plain English
-- 📊 Interactive Gradio interface with natural query input
-- 🧾 Fully open-source with fast FAISS-based search
-
----
-
-## 🧪 Example Query
-
-```
-
-Patient shows signs of edema, orthopnea, and fatigue.
-
-````
-
-💬 RAGnosis Response:
-> The most likely diagnosis is **congestive heart failure (CHF)**. This is indicated by the symptoms of edema (fluid buildup), orthopnea (difficulty breathing while lying down), and fatigue due to decreased cardiac output...
+- 🔎 Top-k document retrieval from real annotated clinical notes
+- 📋 Reasoning based on structured diagnostic chains
+- 🧠 GPT-style generation from LLM (Mistral 7B) without internet dependency
+- 🧾 Clean Gradio interface for natural medical queries
+- 🧠 Answers explained like a clinical reasoning expert
 
 ---
 
-## 🧰 How It Works
+## ⚡ Example Prompt
 
-### 🔹 Step 1: Preprocessing
-- Unzip and parse `samples/` and `diagnostic_kg/`
-- Flatten diagnostic trees, annotated nodes, and observations
-- Generate chunks for retrieval
+> *Patient presents with fatigue, orthopnea, and lower extremity edema.*
 
-### 🔹 Step 2: Vector Retrieval
-- Embed chunks using `all-MiniLM-L6-v2`
-- Build FAISS index → [faiss_index.bin](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/faiss_index.bin)
-- Store metadata → [retrieval_corpus.csv](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/retrieval_corpus.csv)
-
-### 🔹 Step 3: Generation
-- Top-k chunks are inserted into an `[INST]`-style prompt
-- Model: `Nous-Hermes-2-Mistral-7B-DPO`
-- Response is decoded and returned to the user
+💬 **Model response:**
+> Based on the patient's symptoms and context, the most likely diagnosis is **congestive heart failure (CHF)**...
 
 ---
 
-## 🏁 Run Locally
+## 🛠 How It Works
+
+### ✅ Step 1: Preprocessing
+- Extract chains from `samples/` and `diagnostic_kg/`
+- Build retrievable clinical observations + diagnoses
+
+### ✅ Step 2: Retrieval (FAISS)
+- Embed notes using `MiniLM-L6-v2`
+- Save as FAISS index → [`faiss_index.bin`](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/faiss_index.bin)  
+- Paired with → [`retrieval_corpus.csv`](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/retrieval_corpus.csv)
+
+### ✅ Step 3: Generation
+- Format prompt in `[INST]` syntax
+- Generate diagnosis using `Nous-Hermes-2-Mistral-7B-DPO`
+
+---
+
+## 🧪 Run Locally
 
 ```bash
-# Clone the repo
+# 1. Clone the repository
 git clone https://github.com/asadsandhu/RAG-Diagnostic-Assistant.git
 cd RAG-Diagnostic-Assistant
 
-# Install dependencies
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# Run the Gradio app
+# 3. Run the app
 python app.py
 ````
 
-Make sure to download and place these in the root folder:
+✔️ Required files:
 
-* ✅ [faiss\_index.bin](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/faiss_index.bin)
-* ✅ [retrieval\_corpus.csv](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/retrieval_corpus.csv)
+* [`retrieval_corpus.csv`](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/retrieval_corpus.csv)
+* [`faiss_index.bin`](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/faiss_index.bin)
 
 ---
 
-## 📂 Project Structure
+## 📁 Folder Structure
 
 ```
 RAG-Diagnostic-Assistant/
@@ -118,27 +104,27 @@ RAG-Diagnostic-Assistant/
 
 ---
 
-## 👨‍💻 Author
+## 👤 Author
 
-Built with ❤️ by [Asad Ali](https://www.linkedin.com/in/asadsandhu0)
-🔗 GitHub: [@asadsandhu](https://github.com/asadsandhu)
-🔗 Hugging Face: [RAGnosis Space](https://huggingface.co/spaces/asadsandhu/RAGnosis)
+Developed by **Asad Ali**
+🔗 [LinkedIn – @asadsandhu0](https://www.linkedin.com/in/asadsandhu0)
+🔗 [Hugging Face – RAGnosis](https://huggingface.co/spaces/asadsandhu/RAGnosis)
 
 ---
 
 ## 📄 License
 
-Licensed under the **MIT License** — free for personal, academic, or commercial use with attribution.
+This project is under the [MIT License](LICENSE).
 
 ---
 
 ## 🙏 Acknowledgments
 
-* 🏥 Dataset: [MIMIC-IV-Ext-DiReCT](https://github.com/wbw520/DiReCT)
-* 🧠 Model: [Nous-Hermes-2 Mistral-7B-DPO](https://huggingface.co/NousResearch/Nous-Hermes-2-Mistral-7B-DPO)
-* 🔍 Retrieval: [FAISS](https://github.com/facebookresearch/faiss)
-* 🌐 Deployment: [Gradio](https://gradio.app/), [Hugging Face Spaces](https://huggingface.co/spaces)
+* MIMIC-IV-Ext-DiReCT: Annotated diagnostic data
+* Hugging Face Transformers + Gradio
+* Facebook Research – FAISS
+* Nous Research – Instruction-tuned Mistral model
 
 ---
 
-> ⚠️ **Disclaimer**: This project is for educational and research purposes only. It is not intended to provide medical advice, diagnosis, or treatment.
+> ⚠️ *Disclaimer: This project is for research/demo use only. Not intended for clinical decision-making.*
