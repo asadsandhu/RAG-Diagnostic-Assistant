@@ -1,0 +1,10 @@
+transformers
+sentence-transformers
+faiss-cpu
+torch
+gradio
+accelerate
+bitsandbytes
+blobfile
+sentencepiece
+accelerate
