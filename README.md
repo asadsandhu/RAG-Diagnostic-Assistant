@@ -106,7 +106,7 @@ RAG-Diagnostic-Assistant/
 
 ## 👤 Author
 
-Developed by **Asad Ali**
+Built with ❤️ by **Asad Ali**
 🔗 [LinkedIn – @asadsandhu0](https://www.linkedin.com/in/asadsandhu0)
 🔗 [Hugging Face – RAGnosis](https://huggingface.co/spaces/asadsandhu/RAGnosis)
 
