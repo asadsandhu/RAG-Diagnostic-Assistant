@@ -25,7 +25,7 @@
 | Layer        | Details                                                                 |
 |--------------|-------------------------------------------------------------------------|
 | 🧠 Model      | [`Nous-Hermes-2-Mistral-7B-DPO`](https://huggingface.co/NousResearch/Nous-Hermes-2-Mistral-7B-DPO) (GPU) / [`BioMistral-7B`](https://huggingface.co/BioMistral/BioMistral-7B) (CPU) |
-| 🏥 Dataset    | [`MIMIC-IV-Ext-DiReCT`](https://github.com/wbw520/DiReCT)              |
+| 🏥 Dataset    | [`MIMIC-IV-Ext-DiReCT`](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/mimic-iv-ext-direct-1.0.0.zip)              |
 | 🔍 Retriever  | FAISS + SentenceTransformers (`all-MiniLM-L6-v2`)                      |
 | 💻 Frontend   | Gradio (via Hugging Face Spaces)                                       |
 | 🧠 Backend    | PyTorch + Transformers + BitsAndBytes                                  |
