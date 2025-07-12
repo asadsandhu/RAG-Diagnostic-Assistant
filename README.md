@@ -126,18 +126,18 @@ RAG-Diagnostic-Assistant/
 
 * Combines annotated diagnostic chains (in `samples/`) and structured graphs (in `diagnostic_kg/`)
 * Captures how clinicians move from **symptom → rationale → diagnosis**
-* Original repo: [DiReCT GitHub](https://github.com/wbw520/DiReCT)
+* Original repo: [DiReCT GitHub](https://github.com/asadsandhu/RAG-Diagnostic-Assistant/blob/main/mimic-iv-ext-direct-1.0.0.zip)
 
 ---
 
 ## ⚡ Sample Prompt
 
 > Query:
-> "Patient presents with fatigue, orthopnea, and leg swelling."
+> "patient is experiencing shortness of breath"
 
 💬 **LLM Output**:
 
-> "Findings suggest congestive heart failure (CHF), possibly HFpEF, given symptoms of fluid retention and preserved EF..."
+> "Shortness of breath is a common symptom that can be caused by a variety of respiratory conditions. The differential diagnosis for shortness of breath includes asthma, chronic obstructive pulmonary disease (COPD), congestive heart failure, pneumonia, and pneumothorax. In order to determine the cause of the shortness of breath, it is important to consider the patient's medical history, physical examination findings, and diagnostic testing results. For example, if the patient has a history of asthma and is experiencing wheezing and a prolonged expiratory phase on examination, this would suggest asthma as the cause of the shortness of breath. On the other hand, if the patient has a history of congestive heart failure and is experiencing orthopnea, crackles on auscultation, and a history of edema, this would suggest congestive heart failure as the cause of the shortness of breath."
 
 ---
 
